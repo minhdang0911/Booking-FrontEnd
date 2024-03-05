@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Form, Input, Button, Modal, message } from 'antd'; // Import message từ Ant Design
+import { Form, Input, Button, Modal, message } from 'antd';
 import { connect } from 'react-redux';
 import { emitter } from '../../utils/emitter';
 
@@ -13,7 +13,7 @@ class ModalUser extends Component {
             lastName: '',
             address: '',
             confirmModalVisible: false,
-            errors: {}, // Thêm một trạng thái để lưu trữ thông tin lỗi
+            errors: {}, 
         };
         this.listenToEmitter();
     }
@@ -46,7 +46,7 @@ class ModalUser extends Component {
         let isValid = true;
         let errors = {};
 
-        // Thêm đối tượng ánh xạ từ tên trường đến thông báo lỗi cụ thể
+      
         const errorMessages = {
             email: 'Email is required',
             password: 'Password is required',
@@ -60,7 +60,7 @@ class ModalUser extends Component {
         for (let i = 0; i < arrInput.length; i++) {
             if (!this.state[arrInput[i]]) {
                 isValid = false;
-                errors[arrInput[i]] = errorMessages[arrInput[i]]; // Lưu thông tin lỗi cho mỗi trường thiếu
+                errors[arrInput[i]] = errorMessages[arrInput[i]];
             }
         }
 
@@ -89,7 +89,7 @@ class ModalUser extends Component {
         // Call API or dispatch action to add user
         this.props.createNewUser(this.state);
         this.hideConfirmModal();
-        message.success('User added successfully'); // Hiển thị toast khi thêm thành công
+        message.success('User added successfully'); 
     };
 
     render() {
