@@ -9,35 +9,47 @@ import 'slick-carousel/slick/slick-theme.css';
 class Specialty extends Component {
     render() {
         let settings = {
-            dots: true,
+            dots: false,
             infinite: true,
             speed: 500,
-            slidesToShow: 1,
-            slidesToScroll: 1,
+            slidesToShow: 4,
+            slidesToScroll: 2,
         };
         return (
             <div className="section-specialty">
-                <div className="specialty-content">
-                    <Slider {...settings}>
-                        <div className="img-customize">
-                            <h3>1</h3>
-                        </div>
-                        <div className="img-customize">
-                            <h3>2</h3>
-                        </div>
-                        <div className="img-customize">
-                            <h3>3</h3>
-                        </div>
-                        <div className="img-customize">
-                            <h3>4</h3>
-                        </div>
-                        <div className="img-customize">
-                            <h3>5</h3>
-                        </div>
-                        <div className="img-customize">
-                            <h3>6</h3>
-                        </div>
-                    </Slider>
+                <div className="specialty-container">
+                    <div className="specialty-header">
+                        <span className="title-section">Chuyên khoa phổ biến</span>
+                        <button className="btn-section">Xem thêm</button>
+                    </div>
+                    <div className="specialty-body">
+                        <Slider {...settings}>
+                            <div className="specialty-customize">
+                                <div className="bg-image"></div>
+                                <div>Cơ Xương Khớp 1</div>
+                            </div>
+                            <div className="specialty-customize">
+                                <div className="bg-image"></div>
+                                <div>Cơ Xương Khớp 2</div>
+                            </div>
+                            <div className="specialty-customize">
+                                <div className="bg-image"></div>
+                                <div>Cơ Xương Khớp 3</div>
+                            </div>
+                            <div className="specialty-customize">
+                                <div className="bg-image"></div>
+                                <div>Cơ Xương Khớp 4</div>
+                            </div>
+                            <div className="specialty-customize">
+                                <div className="bg-image"></div>
+                                <div>Cơ Xương Khớp 5</div>
+                            </div>
+                            <div className="specialty-customize">
+                                <div className="bg-image"></div>
+                                <div>Cơ Xương Khớp 6</div>
+                            </div>
+                        </Slider>
+                    </div>
                 </div>
             </div>
         );
