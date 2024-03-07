@@ -1,0 +1,128 @@
+//reset slick slider css
+.slick-prev {
+    // border: 1px solid green !important;
+    // position: relative !important;
+    left: -10px !important;
+    z-index: 1000 !important;
+    height: 48px !important;
+    width: 44px !important;
+    background: #fff !important;
+    border: 2px solid #d7d7d7 !important;
+
+    &:hover {
+        background: #d7d7d7 !important;
+    }
+}
+.slick-prev::before,
+.slick-next:before {
+    font-family: 'Font Awesome 5 Free';
+    color: red !important;
+    // content: '\e257' !important;
+}
+
+.slick-next {
+    right: -10px !important;
+    z-index: 1000 !important;
+    height: 48px !important;
+    width: 44px !important;
+    background: #fff !important;
+    border: 2px solid #d7d7d7 !important;
+    &:hover {
+        background: #d7d7d7 !important;
+    }
+}
+
+.section-share {
+    &.section-specialty {
+        background: #f5f5f5;
+    }
+
+    &.section-outstanding-doctor {
+        background: #f5f5f5;
+    }
+
+    .section-body {
+        .section-customize {
+            .bg-image {
+                width: 320px;
+                height: 150px;
+
+                background-position: center center;
+                background-repeat: no-repeat;
+                background-size: cover;
+                background-color: #eee;
+                background-repeat: no-repeat !important;
+
+                &.seciton-specialty {
+                    background-image: url('../../assets/Specialty/co-xuong-khop.png');
+                }
+
+                &.section-medical-facility {
+                    background-image: url('../../assets/medical-facility/bv-viet-duc.jpg');
+                }
+
+                &.section-outstanding-doctor {
+                    background-image: url('../../assets/outstanding-doctor/avt-doctor.jpg');
+                    width: 120px;
+                    height: 120px;
+                    margin: 0 auto;
+                    border-radius: 50%;
+                }
+
+                &.section-handbook {
+                    background-image: url('../../assets/Handbook/camnang1.png');
+                }
+            }
+        }
+    }
+}
+
+.section-share {
+    height: 330px;
+
+    .section-container {
+        margin: 0 100px;
+        display: flex;
+        flex-direction: column;
+        .section-header {
+            height: 60px;
+            margin-bottom: 30px;
+            padding-top: 30px;
+            .title-section {
+                font-size: 22px;
+                font-weight: 600;
+            }
+            .btn-section {
+                float: right;
+                padding: 10px 15px;
+                border: none;
+                outline: none;
+                display: block;
+                background: #ebebeb;
+                color: black;
+                cursor: pointer;
+                text-transform: uppercase;
+
+                &:hover {
+                    color: #fff;
+                    background: #f7d800;
+                }
+            }
+        }
+    }
+}
+
+.section-outstanding-doctor {
+    .outer-bg {
+        display: flex;
+        justify-content: center;
+        margin-bottom: 10px;
+    }
+
+    .section-customize {
+        padding: 5px;
+        .customize-border {
+            border: 1px solid orange;
+        }
+    }
+}
