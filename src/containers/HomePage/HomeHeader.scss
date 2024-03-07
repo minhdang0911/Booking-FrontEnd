@@ -96,6 +96,7 @@
 
 .home-header-banner {
     background-image: url('../../assets/images/background.jpg');
+    // height: 600px;
     height: 485px;
     background-repeat: no-repeat;
     background-size: cover;
@@ -150,6 +151,7 @@
     }
 
     .content-down {
+        padding-bottom: 10px;
         height: 35%;
         display: flex;
         align-items: flex-end;
