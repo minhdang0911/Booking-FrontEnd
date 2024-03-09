@@ -1,4 +1,4 @@
-@import "../../styles/common.scss";
+@import '../../styles/common.scss';
 
 .header-container {
     z-index: 99;
@@ -18,6 +18,31 @@
         }
         i {
             font-size: $base-size + 1px;
+        }
+    }
+
+    .languages {
+        .welcome {
+            margin-right: 10px;
+        }
+        .language-en {
+            margin-right: 15px;
+            margin-left: 10px;
+            cursor: pointer;
+
+            &.active {
+                opacity: 1;
+                color: #30d663;
+            }
+        }
+
+        .language-vi {
+            cursor: pointer;
+
+            &.active {
+                opacity: 1;
+                color: orange;
+            }
         }
     }
 }

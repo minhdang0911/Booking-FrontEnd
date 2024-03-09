@@ -1,4 +1,4 @@
-@import "../styles/common.scss";
+@import '../styles/common.scss';
 
 .navigator-menu {
     display: flex;
@@ -29,12 +29,21 @@
             color: $text-in-light;
             position: absolute;
             padding: 0;
+
             .menu {
                 width: 205px;
                 padding: 0 15px;
                 height: 35px;
                 line-height: 35px;
                 text-transform: none;
+
+                &.active {
+                    a {
+                        color: orange !important;
+                    }
+                    background-color: #ededed !important;
+                }
+
                 .menu-link {
                     text-decoration: none;
                     color: $text-in-light;

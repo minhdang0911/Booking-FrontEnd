@@ -3,9 +3,6 @@ import { connect } from 'react-redux';
 import { push } from 'connected-react-router';
 
 import { handleLoginApi } from '../../services/userService';
-import './Login.scss';
-
-// import * as actions from "../store/actions";
 import * as actions from '../../store/actions';
 import './Login.scss';
 
@@ -25,31 +22,21 @@ class Login extends Component {
         this.setState({
             username: event.target.value,
         });
-        console.log(event.target.value);
     };
 
     handleChangePassword = (event) => {
         this.setState({
             password: event.target.value,
         });
-        console.log(event.target.value);
     };
 
     handleLogin = async () => {
-        // const { username, password, userInfoList } = this.state;
-        // const userInfo = { username, password };
-        // this.setState({
-        //     userInfoList: [...userInfoList, userInfo]
-        // });
-        // // Xử lý đăng nhập, ví dụ: kiểm tra thông tin đăng nhập hợp lệ và hiển thị thông báo
-        // console.log('User info list:', this.state.userInfoList);
-        // // Đặt các logic xử lý sau khi đăng nhập ở đây
         this.setState({
             errMessage: '',
         });
         try {
             let data = await handleLoginApi(this.state.username, this.state.password);
-            if (data && data.errCode != 0) {
+            if (data && data.errCode !== 0) {
                 this.setState({
                     errMessage: data.message,
                 });
@@ -67,6 +54,12 @@ class Login extends Component {
                 }
             }
             console.log(error.response);
+        }
+    };
+
+    handleKeyPress = (event) => {
+        if (event.key === 'Enter') {
+            this.handleLogin();
         }
     };
 
@@ -90,20 +83,22 @@ class Login extends Component {
                                 className="form-control"
                                 placeholder="Enter your username"
                                 onChange={(event) => this.handleChangeUsername(event)}
+                                onKeyPress={(event) => this.handleKeyPress(event)}
                             />
                         </div>
                         <div className="col-12 form-group login-input">
                             <label>Password:</label>
                             <div className="custom-input-password">
                                 <input
-                                    value={this.props.password}
+                                    value={this.state.password}
                                     type={this.state.isShowPassword ? 'text' : 'password'}
                                     className="form-control"
                                     placeholder="Enter your password"
                                     onChange={(event) => this.handleChangePassword(event)}
+                                    onKeyPress={(event) => this.handleKeyPress(event)}
                                 />
-                                <span onClick={() => this.handleShowHidePassword()}>
-                                    <i class={this.state.isShowPassword ? 'far fa-eye' : 'fas fa-eye-slash'}></i>
+                                <span onClick={this.handleShowHidePassword}>
+                                    <i className={this.state.isShowPassword ? 'far fa-eye' : 'fas fa-eye-slash'}></i>
                                 </span>
                             </div>
                         </div>
@@ -112,7 +107,7 @@ class Login extends Component {
                             {this.state.errMessage}
                         </div>
                         <div className="col-12 ">
-                            <button className="btn-login" onClick={() => this.handleLogin()}>
+                            <button className="btn-login" onClick={this.handleLogin}>
                                 Login
                             </button>
                         </div>
@@ -143,7 +138,6 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
     return {
         navigate: (path) => dispatch(push(path)),
-
         userLoginFail: () => dispatch(actions.userLoginFail()),
         userLoginSuccess: (userInfor) => dispatch(actions.userLoginSuccess(userInfor)),
     };
