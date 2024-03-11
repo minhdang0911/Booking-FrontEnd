@@ -1,0 +1,288 @@
+
+
+import React, { Component } from 'react';
+import { FormattedMessage } from 'react-intl';
+import { connect } from 'react-redux';
+import { LANGUAGES } from '../../../utils';
+import * as actions from '../../../store/actions';
+import './UserRedux.scss';
+import { Input, Button, Select, Upload, message } from 'antd';
+import { UploadOutlined } from '@ant-design/icons';
+import Lightbox from 'react-image-lightbox';
+import 'react-image-lightbox/style.css';
+
+const { Option } = Select;
+
+class UserRedux extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            genderArr: [],
+            positionArr: [],
+            roleArr: [],
+            previewImgUrl: '',
+            isOpen: false,
+            email: '',
+            password: '',
+            firstName: '',
+            lastName: '',
+            phoneNumber: '',
+            address: '',
+            gender: '',
+            position: '',
+            role: '',
+            avatar: '',
+        };
+    }
+
+    async componentDidMount() {
+        this.props.getGenderStart();
+        this.props.getPositionStart();
+        this.props.getRoleStart();
+    }
+
+    componentDidUpdate(prevProps) {
+        const { genderRedux, roleRedux, positionRedux } = this.props;
+
+        if (prevProps.genderRedux !== genderRedux) {
+            this.setState({
+                genderArr: genderRedux,
+                gender: genderRedux.length > 0 ? genderRedux[0].key : '',
+            });
+        }
+
+        if (prevProps.roleRedux !== roleRedux) {
+            this.setState({
+                roleArr: roleRedux,
+                role: roleRedux.length > 0 ? roleRedux[0].key : '',
+            });
+        }
+
+        if (prevProps.positionRedux !== positionRedux) {
+            this.setState({
+                positionArr: positionRedux,
+                position: positionRedux.length > 0 ? positionRedux[0].key : '',
+            });
+        }
+    }
+
+    handleInputChange = (event, id) => {
+        const { value } = event.target;
+        this.setState({
+            [id]: value,
+        });
+    };
+
+    handleImageChange = (info) => {
+        if (info.file.status === 'done') {
+            message.success(`${info.file.name} file uploaded successfully`);
+        } else if (info.file.status === 'error') {
+            message.error(`${info.file.name} file upload failed.`);
+        }
+
+        const objectUrl = URL.createObjectURL(info.file.originFileObj);
+        this.setState({
+            previewImgUrl: objectUrl,
+            avatar: info.file.originFileObj,
+        });
+    };
+
+    openPreviewImage = () => {
+        if (!this.state.previewImgUrl) return;
+        this.setState({
+            isOpen: true,
+        });
+    };
+
+    handleSaveUser = () => {
+        const isValid = this.checkValidation();
+        if (!isValid) return;
+
+        const { email, password, firstName, lastName, phoneNumber, address, gender, role, position, avatar } =
+            this.state;
+
+        // Call your redux action here to save user data
+    };
+
+    checkValidation = () => {
+        const { email, password, firstName, lastName, phoneNumber, address } = this.state;
+        const fields = { email, password, firstName, lastName, phoneNumber, address };
+
+        for (const key in fields) {
+            if (!fields[key]) {
+                message.error(`Please fill in ${key}`);
+                return false;
+            }
+        }
+
+        return true;
+    };
+
+    render() {
+        const {
+            genderArr,
+            positionArr,
+            roleArr,
+            previewImgUrl,
+            isOpen,
+            email,
+            password,
+            firstName,
+            lastName,
+            phoneNumber,
+            address,
+        } = this.state;
+        const { language, isLoadingGender } = this.props;
+
+        return (
+            <div className="user-redux-container">
+                <div className="title">Learn Redux</div>
+                <div>{isLoadingGender && 'Loading genders'}</div>
+                <div className="user-redux-body">
+                    <div className="container">
+                        <div className="row">
+                            <div className="col-3">
+                                <label>Email</label>
+                                <Input value={email} onChange={(event) => this.handleInputChange(event, 'email')} />
+                            </div>
+                            <div className="col-3">
+                                <label>Password</label>
+                                <Input.Password
+                                    value={password}
+                                    onChange={(event) => this.handleInputChange(event, 'password')}
+                                />
+                            </div>
+                            {/* Continue with other input fields */}
+                            <div className="col-3">
+                                <label>First Name</label>
+                                <Input
+                                    value={firstName}
+                                    onChange={(event) => this.handleInputChange(event, 'firstName')}
+                                />
+                            </div>
+                            <div className="col-3">
+                                <label>Last Name</label>
+                                <Input
+                                    value={lastName}
+                                    onChange={(event) => this.handleInputChange(event, 'lastName')}
+                                />
+                            </div>
+                            <div className="col-3">
+                                <label>Phone Number</label>
+                                <Input
+                                    value={phoneNumber}
+                                    onChange={(event) => this.handleInputChange(event, 'phoneNumber')}
+                                />
+                            </div>
+                            <div className="col-9">
+                                <label>Address</label>
+                                <Input value={address} onChange={(event) => this.handleInputChange(event, 'address')} />
+                            </div>
+                            <div className="col-3">
+                                <label>Gender</label>
+                                <Select
+                                    value={this.state.gender}
+                                    onChange={(value) => this.setState({ gender: value })}
+                                    className="form-control"
+                                >
+                                    {genderArr &&
+                                        genderArr.map((item, index) => (
+                                            <Option key={index} value={item.key}>
+                                                {language === LANGUAGES.VI ? item.valueVi : item.valueEn}
+                                            </Option>
+                                        ))}
+                                </Select>
+                            </div>
+                            <div className="col-3">
+                                <label>Position</label>
+                                <Select
+                                    value={this.state.position}
+                                    onChange={(value) => this.setState({ position: value })}
+                                    className="form-control"
+                                >
+                                    {positionArr &&
+                                        positionArr.map((item, index) => (
+                                            <Option key={index} value={item.key}>
+                                                {language === LANGUAGES.VI ? item.valueVi : item.valueEn}
+                                            </Option>
+                                        ))}
+                                </Select>
+                            </div>
+                            <div className="col-3">
+                                <label>Role</label>
+                                <Select
+                                    value={this.state.role}
+                                    onChange={(value) => this.setState({ role: value })}
+                                    className="form-control"
+                                >
+                                    {roleArr &&
+                                        roleArr.map((item, index) => (
+                                            <Option key={index} value={item.key}>
+                                                {language === LANGUAGES.VI ? item.valueVi : item.valueEn}
+                                            </Option>
+                                        ))}
+                                </Select>
+                            </div>
+                            <div className="col-3">
+                                <label>Image</label>
+                                <div className="preview-img-container">
+                                    <Upload
+                                        name="avatar"
+                                        listType="picture-card"
+                                        className="avatar-uploader"
+                                        showUploadList={false}
+                                        action="YOUR_UPLOAD_ENDPOINT"
+                                        onChange={this.handleImageChange}
+                                    >
+                                        {previewImgUrl ? (
+                                            <img src={previewImgUrl} alt="avatar" style={{ width: '100%' }} />
+                                        ) : (
+                                            <div>
+                                                <UploadOutlined />
+                                                <div className="ant-upload-text">Upload</div>
+                                            </div>
+                                        )}
+                                    </Upload>
+                                    {previewImgUrl && (
+                                        <div
+                                            className="preview-image"
+                                            style={{ backgroundImage: `url(${previewImgUrl})` }}
+                                            onClick={() => this.openPreviewImage()}
+                                        ></div>
+                                    )}
+                                </div>
+                            </div>
+                            <div className="col-12">
+                                <Button type="primary" onClick={() => this.handleSaveUser()}>
+                                    Save
+                                </Button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {isOpen && <Lightbox mainSrc={previewImgUrl} onCloseRequest={() => this.setState({ isOpen: false })} />}
+            </div>
+        );
+    }
+}
+
+const mapStateToProps = (state) => {
+    return {
+        language: state.app.language,
+        genderRedux: state.admin.genders,
+        roleRedux: state.admin.roles,
+        positionRedux: state.admin.positions,
+        isLoadingGender: state.admin.isLoadingGender,
+    };
+};
+
+const mapDispatchToProps = (dispatch) => {
+    return {
+        getGenderStart: () => dispatch(actions.fetchGenderStart()),
+        getPositionStart: () => dispatch(actions.fetchPositionStart()),
+        getRoleStart: () => dispatch(actions.fetchRoleStart()),
+        createNewUser: (data) => dispatch(actions.createNewUser(data)),
+    };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(UserRedux);
