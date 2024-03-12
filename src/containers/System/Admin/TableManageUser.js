@@ -27,10 +27,12 @@ class TableUserManage extends Component {
         this.props.deleteAUser(user.id);
     };
 
+    handleEditUser = (user) => {
+        this.props.handleEditUserFromParent(user);
+    };
+
     render() {
-        // const { listusers } = this.props;
         let arrUsers = this.state.userRedux;
-        console.log('check all user', this.props.listusers);
 
         return (
             <table id="TableManageUser">
@@ -54,7 +56,10 @@ class TableUserManage extends Component {
                                     <td>{item.lastName}</td>
                                     <td>{item.address}</td>
                                     <td>
-                                        <button className="mb-[20px] w-[80px] rounded-md bg-[#1d77f5] py-[8px] text-[14px] font-semibold text-white shadow-[0px_0px_0px_2px_rgba(25,113,238,1),inset_0px_1px_1px_0px_rgba(255,255,255,0.3)] [text-shadow:_0_1px_0_rgb(0_0_0_/_20%)] btn-editt">
+                                        <button
+                                            onClick={() => this.handleEditUser(item)}
+                                            className="mb-[20px] w-[80px] rounded-md bg-[#1d77f5] py-[8px] text-[14px] font-semibold text-white shadow-[0px_0px_0px_2px_rgba(25,113,238,1),inset_0px_1px_1px_0px_rgba(255,255,255,0.3)] [text-shadow:_0_1px_0_rgb(0_0_0_/_20%)] btn-editt"
+                                        >
                                             <i className="fas fa-pencil-alt"></i>
                                         </button>
                                         <button
