@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
-import { FormattedMessage } from 'react-intl';
+import { Table, Button, Space, Modal, message } from 'antd';
 import { connect } from 'react-redux';
 import * as actions from '../../../store/actions';
+import { EditOutlined, DeleteOutlined } from '@ant-design/icons';
 import './TableManageUser.scss';
 
 class TableUserManage extends Component {
@@ -9,13 +10,16 @@ class TableUserManage extends Component {
         super(props);
         this.state = {
             userRedux: [],
+            deleteModalVisible: false,
+            userToDelete: null,
         };
     }
+
     componentDidMount() {
         this.props.fetchUserRedux();
     }
 
-    componentDidUpdate(prevProps, prewState, snapshot) {
+    componentDidUpdate(prevProps) {
         if (prevProps.listusers !== this.props.listusers) {
             this.setState({
                 userRedux: this.props.listusers,
@@ -23,57 +27,85 @@ class TableUserManage extends Component {
         }
     }
 
-    handleDeleteUser = (user) => {
-        this.props.deleteAUser(user.id);
+    handleDeleteUser = (id) => {
+        this.props.deleteAUser(id);
+        this.setState({ deleteModalVisible: false });
+        message.success('User deleted successfully');
     };
 
     handleEditUser = (user) => {
         this.props.handleEditUserFromParent(user);
     };
 
+    showDeleteModal = (user) => {
+        this.setState({ deleteModalVisible: true, userToDelete: user });
+    };
+
+    handleCancelDeleteModal = () => {
+        this.setState({ deleteModalVisible: false, userToDelete: null });
+    };
+
     render() {
-        let arrUsers = this.state.userRedux;
+        const { userRedux, deleteModalVisible, userToDelete } = this.state;
+
+        const columns = [
+            {
+                title: 'Email',
+                dataIndex: 'email',
+                key: 'email',
+            },
+            {
+                title: 'FirstName',
+                dataIndex: 'firstName',
+                key: 'firstName',
+            },
+            {
+                title: 'LastName',
+                dataIndex: 'lastName',
+                key: 'lastName',
+            },
+            {
+                title: 'Address',
+                dataIndex: 'address',
+                key: 'address',
+            },
+            {
+                title: 'Action',
+                key: 'action',
+                render: (text, record) => (
+                    <Space size="middle">
+                        <Button
+                            type="primary"
+                            icon={<EditOutlined />}
+                            onClick={() => this.handleEditUser(record)}
+                            className="edit-button"
+                        />
+                        <Button
+                            type="danger"
+                            icon={<DeleteOutlined />}
+                            onClick={() => this.showDeleteModal(record)}
+                            className="delete-button"
+                        />
+                    </Space>
+                ),
+            },
+        ];
 
         return (
-            <table id="TableManageUser">
-                <thead>
-                    <tr>
-                        <th>Email</th>
-                        <th>FirstName</th>
-                        <th>LastName</th>
-                        <th>Address</th>
-                        <th>Action</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {arrUsers &&
-                        arrUsers.length > 0 &&
-                        arrUsers.map((item, index) => {
-                            return (
-                                <tr key={index}>
-                                    <td>{item.email}</td>
-                                    <td>{item.firstName}</td>
-                                    <td>{item.lastName}</td>
-                                    <td>{item.address}</td>
-                                    <td>
-                                        <button
-                                            onClick={() => this.handleEditUser(item)}
-                                            className="mb-[20px] w-[80px] rounded-md bg-[#1d77f5] py-[8px] text-[14px] font-semibold text-white shadow-[0px_0px_0px_2px_rgba(25,113,238,1),inset_0px_1px_1px_0px_rgba(255,255,255,0.3)] [text-shadow:_0_1px_0_rgb(0_0_0_/_20%)] btn-editt"
-                                        >
-                                            <i className="fas fa-pencil-alt"></i>
-                                        </button>
-                                        <button
-                                            onClick={() => this.handleDeleteUser(item)}
-                                            className="mb-[20px] w-[80px] rounded-md bg-[#EB3F3F] py-[8px] text-[14px] font-semibold text-white shadow-[0px_0px_0px_2px_rgba(213,61,61,1),inset_0px_1px_1px_0px_rgba(255,255,255,0.3)] [text-shadow:_0_1px_0_rgb(0_0_0_/_20%)] ml-[20px] btn-deletee"
-                                        >
-                                            <i className="fas fa-trash"></i>
-                                        </button>
-                                    </td>
-                                </tr>
-                            );
-                        })}
-                </tbody>
-            </table>
+            <div className="table-container">
+                <Table columns={columns} dataSource={userRedux} rowKey={(record) => record.id} pagination={false} />
+                <Modal
+                    title="Confirm Delete"
+                    visible={deleteModalVisible}
+                    onOk={() => this.handleDeleteUser(userToDelete.id)}
+                    onCancel={this.handleCancelDeleteModal}
+                    okText="Yes"
+                    cancelText="No"
+                    okButtonProps={{ style: { background: '#1677ff' } }}
+                >
+                    <p>Are you sure you want to delete this user?</p>
+                </Modal>
+            </div>
         );
     }
 }
