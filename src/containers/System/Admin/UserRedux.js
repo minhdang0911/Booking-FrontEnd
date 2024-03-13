@@ -7,7 +7,14 @@ import './UserRedux.scss';
 import TableManageUser from './TableManageUser';
 import Lightbox from 'react-image-lightbox';
 import 'react-image-lightbox/style.css';
-import SkeletonImage from 'antd/es/skeleton/Image';
+import { EditFilled, SaveFilled, UploadOutlined } from '@ant-design/icons';
+import { Button, Upload } from 'antd';
+import { Col, message, Input } from 'antd';
+import { Select } from 'antd';
+import { Tooltip } from 'antd';
+import { Modal } from 'antd';
+const { Option } = Select;
+
 class UserRedux extends Component {
     constructor(props) {
         super(props);
@@ -54,7 +61,7 @@ class UserRedux extends Component {
         if (prevProps.genderRedux !== this.props.genderRedux) {
             this.setState({
                 genderArr: arrGenders,
-                gender: arrGenders && arrGenders.length > 0 ? arrGenders[0].key : '',
+                gender: arrGenders && arrGenders.length > 0 ? arrGenders[0].keyMap : '',
             });
         }
         if (prevProps.roleRedux !== this.props.roleRedux) {
@@ -62,7 +69,7 @@ class UserRedux extends Component {
 
             this.setState({
                 roleArr: arrRoles,
-                role: arrRoles && arrRoles.length > 0 ? arrRoles[0].key : '',
+                role: arrRoles && arrRoles.length > 0 ? arrRoles[0].keyMap : '',
             });
         }
 
@@ -70,7 +77,7 @@ class UserRedux extends Component {
             let arrPositions = this.props.positionRedux;
             this.setState({
                 positionArr: arrPositions,
-                position: arrPositions && arrPositions.length > 0 ? arrPositions[0].key : '',
+                position: arrPositions && arrPositions.length > 0 ? arrPositions[0].keyMap : '',
             });
         }
 
@@ -86,9 +93,9 @@ class UserRedux extends Component {
                 lastName: '',
                 phoneNumber: '',
                 address: '',
-                gender: arrGenders && arrGenders.length > 0 ? arrGenders[0].key : '',
-                position: arrPositions && arrPositions.length > 0 ? arrPositions[0].key : '',
-                role: arrRoles && arrRoles.length > 0 ? arrRoles[0].key : '',
+                gender: arrGenders && arrGenders.length > 0 ? arrGenders[0].keyMap : '',
+                position: arrPositions && arrPositions.length > 0 ? arrPositions[0].keyMap : '',
+                role: arrRoles && arrRoles.length > 0 ? arrRoles[0].keyMap : '',
                 avatar: '',
                 action: CRUD_ACTIONS.CREATE,
                 previewImgUrl: '',
@@ -172,7 +179,20 @@ class UserRedux extends Component {
         for (let i = 0; i < arrCheck.length; i++) {
             if (!this.state[arrCheck[i]]) {
                 isValid = false;
-                alert('This input is required ' + arrCheck[i]);
+                Modal.error({
+                    title: 'Validation Error',
+                    content: `This input is required: ${arrCheck[i]}`,
+                    footer: [
+                        <Button
+                            style={{ backgroundColor: 'red' }}
+                            key="ok"
+                            type="primary"
+                            onClick={() => Modal.destroyAll()}
+                        >
+                            OK
+                        </Button>,
+                    ],
+                });
                 break;
             }
         }
@@ -180,6 +200,10 @@ class UserRedux extends Component {
     };
 
     onChangeInput = (event, id) => {
+        if (!event || !event.target) {
+            console.error('Event or event.target is undefined');
+            return;
+        }
         let copyState = { ...this.state };
         copyState[id] = event.target.value;
         this.setState({
@@ -244,20 +268,18 @@ class UserRedux extends Component {
                                     disabled={this.state.action === CRUD_ACTIONS.EDIT}
                                 />
                             </div>
-                            <div className="col-3">
+                            <Col span={6}>
                                 <label>
                                     <FormattedMessage id="manage-user.password" />
                                 </label>
-                                <input
-                                    className="form-control"
-                                    type="password"
+                                <Input.Password
                                     value={password}
                                     onChange={(event) => {
                                         this.onChangeInput(event, 'password');
                                     }}
                                     disabled={this.state.action === CRUD_ACTIONS.EDIT}
                                 />
-                            </div>
+                            </Col>
                             <div className="col-3">
                                 <label>
                                     {' '}
@@ -314,6 +336,7 @@ class UserRedux extends Component {
                                     }}
                                 />
                             </div>
+
                             <div className="col-3">
                                 <label>
                                     {' '}
@@ -330,7 +353,7 @@ class UserRedux extends Component {
                                         genders.length > 0 &&
                                         genders.map((item, index) => {
                                             return (
-                                                <option key={index} value={item.key}>
+                                                <option key={index} value={item.keyMap}>
                                                     {language === LANGUAGES.VI ? item.valueVi : item.valueEn}
                                                 </option>
                                             );
@@ -353,7 +376,7 @@ class UserRedux extends Component {
                                         positions.length > 0 &&
                                         positions.map((item, index) => {
                                             return (
-                                                <option key={index} value={item.key}>
+                                                <option key={index} value={item.keyMap}>
                                                     {language === LANGUAGES.VI ? item.valueVi : item.valueEn}
                                                 </option>
                                             );
@@ -376,16 +399,16 @@ class UserRedux extends Component {
                                         roles.length > 0 &&
                                         roles.map((item, index) => {
                                             return (
-                                                <option key={index} value={item.key}>
+                                                <option key={index} value={item.keyMap}>
                                                     {language === LANGUAGES.VI ? item.valueVi : item.valueEn}
                                                 </option>
                                             );
                                         })}
                                 </select>
                             </div>
+
                             <div className="col-3">
                                 <label>
-                                    {' '}
                                     <FormattedMessage id="manage-user.image" />
                                 </label>
                                 <div className="preview-img-container">
@@ -395,9 +418,12 @@ class UserRedux extends Component {
                                         hidden
                                         onChange={(event) => this.hanleOnChangeImage(event)}
                                     />
-                                    <label className="label-upload" htmlFor="previewimg">
-                                        Tải ảnh <i class="fas fa-upload"></i>
-                                    </label>
+                                    <Tooltip title="Tải ảnh">
+                                        <label className="label-upload" htmlFor="previewimg">
+                                            <UploadOutlined /> Tải ảnh
+                                        </label>
+                                    </Tooltip>
+
                                     <div
                                         className="preview-image"
                                         style={{ backgroundImage: `url(${this.state.previewImgUrl})` }}
@@ -407,18 +433,22 @@ class UserRedux extends Component {
                             </div>
 
                             <div className="col-12 my-3">
-                                <button
-                                    className={
-                                        this.state.action === CRUD_ACTIONS.EDIT ? 'btn btn-warning' : 'btn btn-primary'
-                                    }
+                                <Button
+                                    type={this.state.action === CRUD_ACTIONS.EDIT ? 'warning' : 'primary'}
                                     onClick={() => this.handleSaveUser()}
+                                    icon={this.state.action === CRUD_ACTIONS.EDIT ? <EditFilled /> : <SaveFilled />}
+                                    style={{
+                                        color: 'white',
+                                        background: this.state.action === CRUD_ACTIONS.EDIT ? '#faad14' : '#1890ff',
+                                        borderColor: this.state.action === CRUD_ACTIONS.EDIT ? '#faad14' : '#1890ff',
+                                    }}
                                 >
                                     {this.state.action === CRUD_ACTIONS.EDIT ? (
                                         <FormattedMessage id="manage-user.edit" />
                                     ) : (
                                         <FormattedMessage id="manage-user.save" />
                                     )}
-                                </button>
+                                </Button>
                             </div>
 
                             <div className="col-12">
