@@ -1,25 +1,42 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Layout, Row, Col, Divider } from 'antd';
-import { InstagramOutlined, FacebookOutlined, YoutubeOutlined } from '@ant-design/icons';
+import { Layout, Row, Col, Divider, Input, Button } from 'antd';
+import { InstagramOutlined, FacebookOutlined, YoutubeOutlined, MailOutlined } from '@ant-design/icons';
+import ReactQuill from 'react-quill';
+import 'react-quill/dist/quill.snow.css';
 
 const { Footer } = Layout;
 
 class HomeFooter extends Component {
+    state = {
+        email: '',
+        feedback: '',
+    };
+
+    handleEmailChange = (e) => {
+        this.setState({ email: e.target.value });
+    };
+
+    handleFeedbackChange = (value) => {
+        this.setState({ feedback: value });
+    };
+
+    handleSubmit = () => {
+        // Code to handle feedback submission
+        // You can implement your logic here, like sending feedback to a server
+        console.log('Email:', this.state.email);
+        console.log('Feedback:', this.state.feedback);
+        // Reset form after submission
+        this.setState({ email: '', feedback: '' });
+    };
+
     render() {
         return (
-            <Footer style={{ background: 'rgb(239, 239, 239)', padding: '30px 0', color: '#333' }}>
-                <Row justify="center" align="middle">
+            <Footer style={{ background: 'rgb(239, 239, 239)', padding: '30px 0', color: '#333', marginTop: '10px' }}>
+                <Row justify="center">
                     <Col xs={24} sm={24} md={12} lg={12} xl={12}>
-                        <p
-                            style={{
-                                textAlign: 'center',
-                                marginBottom: 20,
-                                fontSize: 16,
-                                fontFamily: 'Arial, sans-serif',
-                            }}
-                        >
-                            &copy; 2024 BookingCare Clone Fullstack.
+                        <p style={{ textAlign: 'center', marginBottom: 20, fontSize: 16 }}>
+                            &copy; {new Date().getFullYear()} YourHealth Clinic. All rights reserved.
                         </p>
                     </Col>
                     <Col xs={24} sm={24} md={12} lg={12} xl={12}>
@@ -31,21 +48,94 @@ class HomeFooter extends Component {
                     </Col>
                 </Row>
                 <Divider style={{ margin: '20px 0' }} />
-                <Row justify="center">
-                    <Col span={24}>
-                        <p style={{ textAlign: 'center', color: '#333', fontSize: 14 }}>
-                            <a href="#" style={{ color: '#333' }}>
-                                Privacy Policy
-                            </a>{' '}
-                            |{' '}
-                            <a href="#" style={{ color: '#333' }}>
-                                Terms of Service
-                            </a>{' '}
-                            |{' '}
-                            <a href="#" style={{ color: '#333' }}>
-                                Contact Us
-                            </a>
-                        </p>
+                <Row justify="center" gutter={16}>
+                    <Col xs={24} sm={24} md={12} lg={12} xl={12}>
+                        <div style={{ textAlign: 'center', marginBottom: 20 }}>
+                            <h3 style={{ marginBottom: 10 }}>Get in Touch</h3>
+                            <Input
+                                placeholder="Your Email"
+                                prefix={<MailOutlined />}
+                                value={this.state.email}
+                                onChange={this.handleEmailChange}
+                            />
+                            <ReactQuill
+                                theme="snow"
+                                value={this.state.feedback}
+                                onChange={this.handleFeedbackChange}
+                                style={{ marginTop: 10, height: '200px' }} // Increase height here
+                                placeholder="Your Message"
+                            />
+                            <Button type="primary" onClick={this.handleSubmit} style={{ marginTop: 10 }}>
+                                Send Feedback
+                            </Button>
+                        </div>
+                    </Col>
+                    <Col xs={24} sm={24} md={12} lg={12} xl={12}>
+                        <div style={{ textAlign: 'center', marginBottom: 20 }}>
+                            <h3 style={{ marginBottom: 10 }}>Payment Methods</h3>
+                            <div style={{ display: 'flex', justifyContent: 'space-evenly' }}>
+                                <img
+                                    src="https://www.pharmacity.vn/images/Momo.png"
+                                    alt="Momo"
+                                    style={{
+                                        width: '50px',
+                                        height: 'auto',
+                                        cursor: 'pointer',
+                                        transition: 'transform 0.3s ease',
+                                    }}
+                                    onMouseOver={(e) => (e.currentTarget.style.transform = 'scale(1.1)')}
+                                    onMouseOut={(e) => (e.currentTarget.style.transform = 'scale(1)')}
+                                />
+                                <img
+                                    src="https://www.pharmacity.vn/images/Visa.png"
+                                    alt="Visa"
+                                    style={{
+                                        width: '50px',
+                                        height: 'auto',
+                                        cursor: 'pointer',
+                                        transition: 'transform 0.3s ease',
+                                    }}
+                                    onMouseOver={(e) => (e.currentTarget.style.transform = 'scale(1.1)')}
+                                    onMouseOut={(e) => (e.currentTarget.style.transform = 'scale(1)')}
+                                />
+                                <img
+                                    src="https://www.pharmacity.vn/images/MasterCard.png"
+                                    alt="Mastercard"
+                                    style={{
+                                        width: '50px',
+                                        height: 'auto',
+                                        cursor: 'pointer',
+                                        transition: 'transform 0.3s ease',
+                                    }}
+                                    onMouseOver={(e) => (e.currentTarget.style.transform = 'scale(1.1)')}
+                                    onMouseOut={(e) => (e.currentTarget.style.transform = 'scale(1)')}
+                                />
+                                <img
+                                    src="https://www.pharmacity.vn/images/COD.png"
+                                    alt="Cash on Delivery"
+                                    style={{
+                                        width: '50px',
+                                        height: 'auto',
+                                        cursor: 'pointer',
+                                        transition: 'transform 0.3s ease',
+                                    }}
+                                    onMouseOver={(e) => (e.currentTarget.style.transform = 'scale(1.1)')}
+                                    onMouseOut={(e) => (e.currentTarget.style.transform = 'scale(1)')}
+                                />
+                                <img
+                                    src="https://www.pharmacity.vn/images/JCB.png"
+                                    alt="JCB"
+                                    style={{
+                                        width: '50px',
+                                        height: 'auto',
+                                        cursor: 'pointer',
+                                        transition: 'transform 0.3s ease',
+                                    }}
+                                    onMouseOver={(e) => (e.currentTarget.style.transform = 'scale(1.1)')}
+                                    onMouseOut={(e) => (e.currentTarget.style.transform = 'scale(1)')}
+                                />
+                            </div>
+                        </div>
                     </Col>
                 </Row>
             </Footer>

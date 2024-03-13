@@ -76,6 +76,7 @@ class TableUserManage extends Component {
                     <Space size="middle">
                         <Button
                             type="primary"
+                            style={{ backgroundColor: 'white', color: 'black' }}
                             icon={<EditOutlined />}
                             onClick={() => this.handleEditUser(record)}
                             className="edit-button"
