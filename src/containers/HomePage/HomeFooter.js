@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Layout, Row, Col, Divider, Input, Button } from 'antd';
-import { InstagramOutlined, FacebookOutlined, YoutubeOutlined, MailOutlined } from '@ant-design/icons';
+import { InstagramOutlined, FacebookOutlined, YoutubeOutlined, MailOutlined, SendOutlined } from '@ant-design/icons';
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 
@@ -32,7 +32,14 @@ class HomeFooter extends Component {
 
     render() {
         return (
-            <Footer style={{ background: 'rgb(239, 239, 239)', padding: '30px 0', color: '#333', marginTop: '10px' }}>
+            <Footer
+                style={{
+                    background: 'rgb(239, 239, 239)',
+                    padding: '20px 0',
+                    color: '#333',
+                    marginTop: '10px',
+                }}
+            >
                 <Row justify="center">
                     <Col xs={24} sm={24} md={12} lg={12} xl={12}>
                         <p style={{ textAlign: 'center', marginBottom: 20, fontSize: 16 }}>
@@ -62,11 +69,15 @@ class HomeFooter extends Component {
                                 theme="snow"
                                 value={this.state.feedback}
                                 onChange={this.handleFeedbackChange}
-                                style={{ marginTop: 10, height: '200px' }} // Increase height here
+                                style={{ marginTop: 10, height: '150px' }}
                                 placeholder="Your Message"
                             />
-                            <Button type="primary" onClick={this.handleSubmit} style={{ marginTop: 10 }}>
-                                Send Feedback
+                            <Button
+                                type="primary"
+                                onClick={this.handleSubmit}
+                                style={{ marginTop: 50, backgroundColor: '#ddd' }}
+                            >
+                                <SendOutlined /> Send Feedback
                             </Button>
                         </div>
                     </Col>
