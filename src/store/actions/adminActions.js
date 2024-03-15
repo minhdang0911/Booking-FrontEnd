@@ -6,6 +6,8 @@ import {
     deleteUserService,
     editUserService,
     getTopDoctorHomeServivce,
+    getAllDoctors,
+    saveDetailDoctorService,
 } from '../../services/userService';
 import { message } from 'antd';
 import { toast } from 'react-toastify';
@@ -217,6 +219,56 @@ export const fetchTopDoctor = () => {
             }
             console.log('check docktor', res);
         } catch (e) {}
+    };
+};
+
+export const fetchAllDoctor = () => {
+    return async (dispatch, getState) => {
+        try {
+            let res = await getAllDoctors();
+            if (res && res.errCode === 0) {
+                dispatch({
+                    type: actionTypes.FETCH_ALL_DOCTOR_SUCCESS,
+                    dataDr: res.data,
+                });
+            } else {
+                dispatch({
+                    type: actionTypes.FETCH_ALL_DOCTOR_FAILED,
+                });
+            }
+            console.log('check doctor', res);
+        } catch (error) {
+            console.error('Error fetching doctors:', error);
+            dispatch({
+                type: actionTypes.FETCH_ALL_DOCTOR_FAILED,
+            });
+        }
+    };
+};
+
+export const saveDetailDoctor = (data) => {
+    return async (dispatch, getState) => {
+        try {
+            let res = await saveDetailDoctorService(data);
+            if (res && res.errCode === 0) {
+                toast.success('Save infor detail Doctor Success');
+                dispatch({
+                    type: actionTypes.SAVE_DETAIL_DOCTOR_SUCCESS,
+                });
+            } else {
+                toast.error('Save infor detail Doctor error');
+                dispatch({
+                    type: actionTypes.SAVE_DETAIL_DOCTOR_FAILDED,
+                });
+            }
+            console.log('check doctor', res);
+        } catch (error) {
+            toast.error('Save infor detail Doctor error');
+            console.error('Error fetching doctors:', error);
+            dispatch({
+                type: actionTypes.SAVE_DETAIL_DOCTOR_FAILDED,
+            });
+        }
     };
 };
 
