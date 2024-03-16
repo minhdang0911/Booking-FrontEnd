@@ -1,7 +1,15 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Layout, Row, Col, Divider, Input, Button } from 'antd';
-import { InstagramOutlined, FacebookOutlined, YoutubeOutlined, MailOutlined, SendOutlined } from '@ant-design/icons';
+import {
+    InstagramOutlined,
+    FacebookOutlined,
+    YoutubeOutlined,
+    MailOutlined,
+    SendOutlined,
+    UpOutlined,
+    ArrowUpOutlined,
+} from '@ant-design/icons';
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 
@@ -11,6 +19,13 @@ class HomeFooter extends Component {
     state = {
         email: '',
         feedback: '',
+    };
+
+    scrollToTop = () => {
+        window.scrollTo({
+            top: 0,
+            behavior: 'smooth', // Cuộn lên với hiệu ứng mượt
+        });
     };
 
     handleEmailChange = (e) => {

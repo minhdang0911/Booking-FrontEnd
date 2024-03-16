@@ -10,11 +10,11 @@ import HomeFooter from './HomeFooter';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 import './HomePage.scss';
-
 class HomePage extends Component {
     handleAfterChange = (index, dontAnimate) => {
         console.log('slick', dontAnimate);
     };
+
     render() {
         let settings = {
             dots: false,
@@ -26,7 +26,7 @@ class HomePage extends Component {
         };
         return (
             <div>
-                <HomeHeader />
+                <HomeHeader isShowBanner={true} />
                 <Specialty settings={settings} />
                 <MediacalFacility settings={settings} />
                 <OutStandingDoctor settings={settings} />

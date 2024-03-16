@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Table, Button, Space, Modal, message } from 'antd';
 import { connect } from 'react-redux';
 import * as actions from '../../../store/actions';
-import { EditOutlined, DeleteOutlined } from '@ant-design/icons';
+import { EditOutlined, DeleteOutlined, SaveOutlined } from '@ant-design/icons';
 import './ManageDoctor.scss';
 
 import MarkdownIt from 'markdown-it';
@@ -10,12 +10,6 @@ import MdEditor from 'react-markdown-editor-lite';
 import 'react-markdown-editor-lite/lib/index.css';
 import Select from 'react-select';
 import { LANGUAGES } from '../../../utils';
-
-// const options = [
-//     { value: 'chocolate', label: 'Chocolate' },
-//     { value: 'strawberry', label: 'Strawberry' },
-//     { value: 'vanilla', label: 'Vanilla' },
-// ];
 
 const mdParser = new MarkdownIt();
 
@@ -28,6 +22,7 @@ class ManageDoctor extends Component {
             selectedOption: '',
             description: '',
             listDoctors: [],
+            saving: false, // Trạng thái lưu đang được thực hiện
         };
     }
 
@@ -53,14 +48,7 @@ class ManageDoctor extends Component {
     };
 
     componentDidUpdate(prevProps, prevState, snapshot) {
-        if (prevProps.allDoctors !== this.props.allDoctors) {
-            let dataSelect = this.buildDataaInputSelect(this.props.allDoctors);
-            this.setState({
-                listDoctors: dataSelect,
-            });
-        }
-
-        if (prevProps.language !== this.props.language) {
+        if (prevProps.allDoctors !== this.props.allDoctors || prevProps.language !== this.props.language) {
             let dataSelect = this.buildDataaInputSelect(this.props.allDoctors);
             this.setState({
                 listDoctors: dataSelect,
@@ -73,17 +61,24 @@ class ManageDoctor extends Component {
             contentMarkdown: text,
             contentHTML: html,
         });
-        console.log('handleEditorChange', html, text);
     };
 
     handleSaveContentMarkdown = () => {
-        this.props.saveDetailDoctor({
-            contentHTML: this.state.contentHTML,
-            contentMarkdown: this.state.contentMarkdown,
-            description: this.state.description,
-            doctorId: this.state.selectedOption.value,
-        });
-        console.log(this.state);
+        // Bắt đầu quá trình lưu
+        this.setState({ saving: true });
+
+        // Gọi action lưu thông tin bác sĩ
+        this.props
+            .saveDetailDoctor({
+                contentHTML: this.state.contentHTML,
+                contentMarkdown: this.state.contentMarkdown,
+                description: this.state.description,
+                doctorId: this.state.selectedOption.value,
+            })
+            .then(() => {
+                // Hoàn thành quá trình lưu
+                this.setState({ saving: false });
+            });
     };
 
     handleChange = (selectedOption) => {
@@ -96,7 +91,8 @@ class ManageDoctor extends Component {
     };
 
     render() {
-        console.log('all doctors', this.state);
+        const { saving } = this.state;
+
         return (
             <div className="manage-doctor-container">
                 <div className="manage-doctor-title">Tạo thêm thông tin doctor</div>
@@ -107,6 +103,7 @@ class ManageDoctor extends Component {
                             value={this.state.selectedOption}
                             onChange={this.handleChange}
                             options={this.state.listDoctors}
+                            isSearchable={true} // Kích hoạt chức năng tìm kiếm
                         />
                     </div>
                     <div className="content-right">
@@ -126,9 +123,17 @@ class ManageDoctor extends Component {
                         onChange={this.handleEditorChange}
                     />
                 </div>
-                <button onClick={() => this.handleSaveContentMarkdown()} className="save-content-doctor">
+                <Button
+                    onClick={this.handleSaveContentMarkdown}
+                    loading={saving} // Sử dụng loading để hiển thị quá trình lưu
+                    className="save-content-doctor"
+                    type="primary"
+                    icon={<SaveOutlined />} // Icon của nút
+                    size="large"
+                    style={{ marginTop: '20px' }} // Khoảng cách với phần trên
+                >
                     Lưu thông tin
-                </button>
+                </Button>
             </div>
         );
     }
@@ -140,7 +145,7 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-    fetchAllDoctors: (id) => dispatch(actions.fetchAllDoctor()),
+    fetchAllDoctors: () => dispatch(actions.fetchAllDoctor()),
     saveDetailDoctor: (data) => dispatch(actions.saveDetailDoctor(data)),
 });
 
