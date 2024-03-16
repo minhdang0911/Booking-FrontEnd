@@ -184,7 +184,7 @@ class UserRedux extends Component {
                     content: `This input is required: ${arrCheck[i]}`,
                     footer: [
                         <Button
-                            style={{ backgroundColor: 'red' }}
+                            style={{ backgroundColor: 'red', margin: '0 auto', display: 'flex' }}
                             key="ok"
                             type="primary"
                             onClick={() => Modal.destroyAll()}
