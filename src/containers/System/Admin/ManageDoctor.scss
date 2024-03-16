@@ -22,6 +22,20 @@
         }
     }
 
+    .create-content-doctor {
+        margin-top: 20px;
+        margin-bottom: 30px;
+        border-radius: 3px;
+        outline: none;
+        border: none;
+        padding: 5px;
+        background: linear-gradient(90deg, rgba(2, 0, 36, 1) 0%, rgba(9, 70, 121, 1) 35%, rgba(0, 212, 255, 1) 100%);
+        cursor: pointer;
+        &:hover {
+            opacity: 0.9;
+        }
+    }
+
     .more-infor {
         display: flex;
         gap: 15px;
