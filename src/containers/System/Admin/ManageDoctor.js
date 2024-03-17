@@ -115,7 +115,7 @@ class ManageDoctor extends Component {
                             value={this.state.selectedOption}
                             onChange={this.handleChangeSelect}
                             options={this.state.listDoctors}
-                            isSearchable={true} // Kích hoạt chức năng tìm kiếm
+                            isSearchable={true}
                         />
                     </div>
                     <div className="content-right">

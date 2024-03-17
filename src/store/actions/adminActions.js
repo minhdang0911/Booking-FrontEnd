@@ -273,4 +273,27 @@ export const saveDetailDoctor = (data) => {
     };
 };
 
+export const fetchAllScheduleTime = () => {
+    return async (dispatch, getState) => {
+        try {
+            let res = await getAllCodeService('TIME');
+            if (res && res.errCode === 0) {
+                dispatch({
+                    type: actionTypes.FETCH_ALLCODE_SCHEDULE_TIME_SUCCESS,
+                    dateTime: res.data,
+                });
+            } else {
+                dispatch({
+                    type: actionTypes.FETCH_ALLCODE_SCHEDULE_TIME_FAILDED,
+                });
+            }
+            console.log('check doctor', res);
+        } catch (error) {
+            console.error('Error fetching doctors:', error);
+            dispatch({
+                type: actionTypes.FETCH_ALLCODE_SCHEDULE_TIME_FAILDED,
+            });
+        }
+    };
+};
 // let res1 = await getTopDoctorHomeServivce(3);
