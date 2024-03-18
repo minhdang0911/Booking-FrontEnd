@@ -7,8 +7,8 @@ import { nanoid } from 'nanoid';
 import FullWidth from './FullWidth';
 
 const Photo = styled.img`
-    width: ${(props) => props.scale * 184}px; /* Giảm kích thước từ 368px xuống 120px */
-    height: ${(props) => props.scale * 130}px; /* Giảm kích thước từ 200px xuống 65px */
+    width: ${(props) => props.scale * 200}px;
+    height: ${(props) => props.scale * 130}px;
     border-radius: 4px;
     box-shadow: 0 7px 20px 0 rgba(0, 0, 0, 0.12);
     object-fit: cover;
@@ -31,7 +31,7 @@ const photos = [
     'https://www.senviet.art/wp-content/uploads/edd/2017/08/prudential1.jpg',
     'https://inkythuatso.com/uploads/images/2021/11/logo-manulife-inkythuatso-01-16-14-48-52.jpg',
     'https://hrchannels.com/Upload/avatar/20210914/104336483_Chubb-Logo-Vector-Free-Download.jpg',
-    'https://cdn.haitrieu.com/wp-content/uploads/2022/04/Logo-BaoViet-Life.png',
+    'https://www.globalsafe.vn/noidung/uploads/2017/10/thiet-ke-logo-baoviet.png',
     'https://inkythuatso.com/uploads/thumbnails/800/2021/12/logo-fwd-inkythuatso-01-13-16-49-51.jpg',
 ];
 
