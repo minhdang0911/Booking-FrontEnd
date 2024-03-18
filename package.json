@@ -27,6 +27,7 @@
         "react-image-magnify": "^2.7.4",
         "react-intl": "^5.20.2",
         "react-markdown-editor-lite": "^1.3.0",
+        "react-marquee-slider": "^1.1.5",
         "react-player": "^2.15.1",
         "react-quill": "^2.0.0",
         "react-quill-image-uploader": "^0.1.1",
@@ -37,6 +38,7 @@
         "react-scroll-to-top-button": "^1.0.0",
         "react-scroll-up-button": "^1.6.4",
         "react-select": "^4.3.1",
+        "react-sizeme": "^3.0.2",
         "react-slick": "^0.28.1",
         "react-spring": "^9.7.3",
         "react-toastify": "^5.5.0",
@@ -48,6 +50,7 @@
         "redux-state-sync": "^2.1.0",
         "redux-thunk": "^2.3.0",
         "slick-carousel": "^1.8.1",
+        "styled-components": "^6.1.8",
         "typescript": "^4.3.2"
     },
     "scripts": {

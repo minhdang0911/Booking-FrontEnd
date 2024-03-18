@@ -6,10 +6,12 @@ import MediacalFacility from './Section/MediacalFacility';
 import OutStandingDoctor from './Section/OutStandingDoctor';
 import HandBook from './Section/HandBook';
 import About from './Section/About';
+import HealthInsuranceCompanies from './HealthInsuranceCompanies';
 import HomeFooter from './HomeFooter';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 import './HomePage.scss';
+
 class HomePage extends Component {
     handleAfterChange = (index, dontAnimate) => {
         console.log('slick', dontAnimate);
@@ -32,6 +34,7 @@ class HomePage extends Component {
                 <OutStandingDoctor settings={settings} />
                 <HandBook settings={settings} />
                 <About />
+                <HealthInsuranceCompanies />
                 <HomeFooter />
             </div>
         );
