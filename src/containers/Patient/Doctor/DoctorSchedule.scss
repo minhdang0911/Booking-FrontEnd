@@ -1,5 +1,5 @@
 .doctor-schedule-container {
-    border-right: 1px solid green;
+    border-right: 1px solid #ddd;
     height: 100%;
     .all-schedule {
         select {
@@ -28,21 +28,66 @@
         }
 
         .time-content {
-            display: flex;
-            gap: 15px;
-            flex-wrap: wrap;
-            button {
-                padding: 8px 10px;
-                border: none;
-                outline: none;
-                background-color: grey;
-                min-width: 120px;
-                border-radius: 3px;
-                font-weight: 600;
-                color: #333;
-                &:hover {
-                    background-color: #45c3d2;
-                    color: white;
+            .time-content-btns {
+                display: flex;
+                gap: 15px;
+                flex-wrap: wrap;
+
+                button {
+                    padding: 8px 10px;
+                    border: none;
+                    outline: none;
+                    background-color: #eeeeee;
+                    min-width: 120px;
+                    border-radius: 3px;
+                    font-weight: 600;
+                    color: rgba(0, 0, 0, 1);
+                    font: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+                    &:hover {
+                        background-color: #45c3d2;
+                        color: white;
+                        // border: 1px solid #45c3d2;
+                    }
+                }
+
+                .btn-vie {
+                    min-width: 120px;
+                }
+
+                .btn-en {
+                    min-width: 170px;
+                }
+
+                .no-schedule {
+                    font-style: italic;
+                    font-size: 14px;
+                }
+            }
+
+            .book-free {
+                display: flex;
+                align-items: center;
+
+                .btn-hand {
+                    margin-left: 3px;
+                }
+
+                .choose,
+                .free {
+                    background-color: rgba(0, 0, 0, 0);
+                    border: 0 solid black;
+                    box-sizing: border-box;
+                    color: rgba(0, 0, 0, 1);
+                    display: inline;
+                    font: 14px -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+                    list-style: none;
+                    margin: 0;
+                    padding: 0;
+                    position: relative;
+                    text-align: start;
+                    text-decoration: none;
+                    white-space: pre-wrap;
+                    word-wrap: break-word;
                 }
             }
         }

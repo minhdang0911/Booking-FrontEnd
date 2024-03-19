@@ -133,6 +133,12 @@ class ManageSchedule extends Component {
             formatedDate: formatedDate,
         });
 
+        if (res && res.errCode === 0) {
+            message.success('Save Infor Success');
+        } else {
+            message.error('Save failed');
+        }
+
         console.log('result', result);
         console.log('check savebulk', res);
     };
@@ -141,6 +147,7 @@ class ManageSchedule extends Component {
         const { isLoggedIn } = this.props;
         let { rangeTime } = this.state;
         let { language } = this.props;
+        let yesterday = new Date(new Date().setDate(new Date().getDate() - 1));
         return (
             <div className="manage-schedule-container">
                 <div className="m-s-title">
@@ -167,7 +174,7 @@ class ManageSchedule extends Component {
                                 className="form-control"
                                 onChange={this.handleOnChangeDataPicker}
                                 value={this.state.currentDate}
-                                minDate={new Date()}
+                                minDate={yesterday}
                             />
                         </div>
                         <div className="col-12 pick-hour-container">
