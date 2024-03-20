@@ -74,5 +74,14 @@
             "choose": "Choose",
             "Schedule-a-free-appointment": " And book (Reservation free 0 VND)"
         }
+    },
+    "admin": {
+        "manage-doctor": {
+            "title": "Create more informaion doctors",
+            "select-doctor": "Select doctor",
+            "intro": "Introduction",
+            "add": "Create Infor",
+            "save": "Save Info"
+        }
     }
 }

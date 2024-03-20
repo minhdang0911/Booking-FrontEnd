@@ -9,6 +9,7 @@ const initialState = {
     allDoctors: [],
     allScheduleTime: [],
     isLoadingGender: false,
+    allRequiredDoctorInfor: [],
 };
 
 const adminReducer = (state = initialState, action) => {
@@ -102,6 +103,18 @@ const adminReducer = (state = initialState, action) => {
             return {
                 ...state,
                 allScheduleTime: [],
+            };
+
+        case actionTypes.FETCH_REQUIRED_DOCTOR_INFOR_SUCCESS:
+            return {
+                ...state,
+                allRequiredDoctorInfor: action.data,
+            };
+
+        case actionTypes.FETCH_REQUIRED_DOCTOR_INFOR_FAILED:
+            return {
+                ...state,
+                allRequiredDoctorInfor: [],
             };
 
         default:

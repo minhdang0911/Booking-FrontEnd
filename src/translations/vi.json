@@ -76,5 +76,14 @@
             "choose": "Chọn",
             "Schedule-a-free-appointment": " và đặt (Phí đặt lịch 0đ)"
         }
+    },
+    "admin": {
+        "manage-doctor": {
+            "title": "Tạo thêm thông tin doctor",
+            "select-doctor": "Chọn bác sĩ",
+            "intro": "Thông tin giới thiệu",
+            "add": "Tạo thông tin",
+            "save": "Lưu thông tin"
+        }
     }
 }
