@@ -7,8 +7,8 @@ import { nanoid } from 'nanoid';
 import FullWidth from './FullWidth';
 
 const Photo = styled.img`
-    width: ${(props) => props.scale * 200}px;
-    height: ${(props) => props.scale * 130}px;
+    width: ${(props) => props.scale * 220}px;
+    height: ${(props) => props.scale * 170}px;
     border-radius: 4px;
     box-shadow: 0 7px 20px 0 rgba(0, 0, 0, 0.12);
     object-fit: cover;

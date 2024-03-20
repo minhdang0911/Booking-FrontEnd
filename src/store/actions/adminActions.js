@@ -257,14 +257,14 @@ export const saveDetailDoctor = (data) => {
                     type: actionTypes.SAVE_DETAIL_DOCTOR_SUCCESS,
                 });
             } else {
-                toast.error('Save infor detail Doctor error');
+                message.error('Save infor detail Doctor error');
                 dispatch({
                     type: actionTypes.SAVE_DETAIL_DOCTOR_FAILDED,
                 });
             }
             console.log('check doctor', res);
         } catch (error) {
-            toast.error('Save infor detail Doctor error');
+            message.error('Save infor detail Doctor error');
             console.error('Error fetching doctors:', error);
             dispatch({
                 type: actionTypes.SAVE_DETAIL_DOCTOR_FAILDED,
