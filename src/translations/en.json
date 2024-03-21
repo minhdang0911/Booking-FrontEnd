@@ -73,6 +73,13 @@
             "no-schedule": "Doctors do not have appointments during this time, please choose another time!",
             "choose": "Choose",
             "Schedule-a-free-appointment": " And book (Reservation free 0 VND)"
+        },
+        "extra-infor-doctor": {
+            "text-address": "Examination address",
+            "price": "Examination price :",
+            "detail": "See details",
+            "payment": " Patients can pay costs in form :",
+            "hide-price": "Hide price list"
         }
     },
     "admin": {
