@@ -25,7 +25,7 @@ class DoctorExtraInfor extends Component {
 
         if (this.props.doctorIdFromParent !== prevProps.doctorIdFromParent) {
             let res = await getExtraInforDoctorById(this.props.doctorIdFromParent);
-            if (res && res.errCode === 0) {
+            if (res) {
                 this.setState({
                     extraInfor: res.data,
                 });
@@ -51,10 +51,14 @@ class DoctorExtraInfor extends Component {
                         <FormattedMessage id="patient.extra-infor-doctor.text-address" />
                     </div>
                     <div className="name-clinic">
-                        {extraInfor && extraInfor.nameClinic ? extraInfor.nameClinic : ''}
+                        {extraInfor.Doctor_infor && extraInfor.Doctor_infor.nameClinic
+                            ? extraInfor.Doctor_infor.nameClinic
+                            : ''}
                     </div>
                     <div className="detail-address">
-                        {extraInfor && extraInfor.addressClinic ? extraInfor.addressClinic : ''}
+                        {extraInfor.Doctor_infor && extraInfor.Doctor_infor.addressClinic
+                            ? extraInfor.Doctor_infor.addressClinic
+                            : ''}
                     </div>
                 </div>
                 <div className="content-down">
@@ -100,33 +104,37 @@ class DoctorExtraInfor extends Component {
                                         <FormattedMessage id="patient.extra-infor-doctor.price" />
                                     </span>
                                     <span className="right">
-                                        {extraInfor && extraInfor.priceTypeData && language === LANGUAGES.VI && (
-                                            <NumberFormat
-                                                value={extraInfor.priceTypeData.ValueVi}
-                                                displayType={'text'}
-                                                thousandSeparator={true}
-                                                suffix={'VND'}
-                                                className="currency"
-                                            />
-                                        )}
-                                        {extraInfor && extraInfor.priceTypeData && language === LANGUAGES.EN && (
-                                            <NumberFormat
-                                                value={extraInfor.priceTypeData.valueEn}
-                                                displayType={'text'}
-                                                thousandSeparator={true}
-                                                suffix={'$'}
-                                                className="currency"
-                                            />
-                                        )}
+                                        {extraInfor &&
+                                            extraInfor.Doctor_infor.priceTypeData &&
+                                            language === LANGUAGES.VI && (
+                                                <NumberFormat
+                                                    value={extraInfor.Doctor_infor.priceTypeData.ValueVi}
+                                                    displayType={'text'}
+                                                    thousandSeparator={true}
+                                                    suffix={'VND'}
+                                                    className="currency"
+                                                />
+                                            )}
+                                        {extraInfor &&
+                                            extraInfor.Doctor_infor.priceTypeData &&
+                                            language === LANGUAGES.EN && (
+                                                <NumberFormat
+                                                    value={extraInfor.Doctor_infor.priceTypeData.valueEn}
+                                                    displayType={'text'}
+                                                    thousandSeparator={true}
+                                                    suffix={'$'}
+                                                    className="currency"
+                                                />
+                                            )}
                                     </span>
                                 </div>
                                 <div className="note"> {extraInfor && extraInfor.note ? extraInfor.note : ''}</div>
                             </div>
                             <div className="payment">
                                 <FormattedMessage id="patient.extra-infor-doctor.payment" />
-                                {extraInfor && extraInfor.paymentTypeData && language === LANGUAGES.VI
-                                    ? extraInfor.paymentTypeData.ValueVi
-                                    : extraInfor.paymentTypeData.valueEn}
+                                {extraInfor && extraInfor.Doctor_infor.paymentTypeData && language === LANGUAGES.VI
+                                    ? extraInfor.Doctor_infor.paymentTypeData.ValueVi
+                                    : extraInfor.Doctor_infor.paymentTypeData.valueEn}
                             </div>
                             <div className="hide-price">
                                 <span onClick={() => this.showHideDetailInfor(false)}>
