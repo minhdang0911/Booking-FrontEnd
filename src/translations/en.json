@@ -80,6 +80,20 @@
             "detail": "See details",
             "payment": " Patients can pay costs in form :",
             "hide-price": "Hide price list"
+        },
+        "booking-modal": {
+            "title": "Information on scheduling medical examinations",
+            "fullname": "Fullname",
+            "phonenumber": "Phonenumber",
+            "email": "Email",
+            "address": "Address",
+            "reason": "Lý do khám",
+            "birthday": "Reason for examination",
+            "gender": "Gender",
+            "confirm": "Comfirm",
+            "cancel": "Cancel",
+            "pricebooking": "Free appointment",
+            "price": "Price"
         }
     },
     "admin": {
