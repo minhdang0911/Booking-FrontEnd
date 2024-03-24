@@ -113,13 +113,30 @@ class DoctorSchedule extends Component {
     render() {
         const { allDays, allAvailableTime } = this.state;
         const { language } = this.props;
+
         return (
             <>
                 <div className="doctor-schedule-container">
                     <div className="all-schedule">
-                        <select onChange={(event) => this.handleOnChangeSelect(event)}>
+                        <select
+                            onChange={(event) => this.handleOnChangeSelect(event)}
+                            style={{
+                                backgroundColor: 'white',
+                                border: '1px solid #ced4da',
+                                borderRadius: '5px',
+                                padding: '8px',
+                                fontSize: '14px',
+                                cursor: 'pointer',
+                                outline: 'none',
+                                transition: 'border-color 0.2s ease',
+                            }}
+                        >
                             {allDays.map((item, index) => (
-                                <option value={item.value} key={index}>
+                                <option
+                                    value={item.value}
+                                    key={index}
+                                    style={{ transition: 'background-color 0.2s ease, color 0.2s ease' }}
+                                >
                                     {item.label}
                                 </option>
                             ))}

@@ -5,10 +5,11 @@ import './BookingModal.scss';
 import { FormattedMessage } from 'react-intl';
 import ProfileDoctor from '../ProfileDoctor';
 import _ from 'lodash';
-import { Modal, Input, Select, DatePicker, Button } from 'antd';
+import { Modal, Input, Select, DatePicker, Button, notification, message } from 'antd';
 import { postPatientBooking } from '../../../../services/userService';
 import { fetchGenderStart } from '../../../../store/actions';
 import { LANGUAGES } from '../../../../utils';
+import moment from 'moment';
 
 class BookingModal extends Component {
     constructor(props) {
@@ -121,13 +122,42 @@ class BookingModal extends Component {
         return Object.keys(errors).length === 0;
     };
 
-    handleComfirmBooking = async () => {
-        if (!this.validateInputs()) {
-            return; // Ngừng xử lý nếu dữ liệu không hợp lệ
-        }
+    buildTimeBooking = (dataTime) => {
+        let { language } = this.props;
 
-        const date = new Date(this.state.birthday).getTime();
-        const res = await postPatientBooking({
+        if (dataTime && !_.isEmpty(dataTime)) {
+            let time = language === LANGUAGES.VI ? dataTime.timeTypeData.ValueVi : dataTime.timeTypeData.valueEn;
+            let date =
+                language === LANGUAGES.VI
+                    ? moment.unix(+dataTime.date / 1000).format('dddd-DD/MM/YYYY')
+                    : moment
+                          .unix(+dataTime.date / 1000)
+                          .locale('en')
+                          .format('ddd -MM/DD/YYYY');
+
+            return `${time} -${date}`;
+        }
+        return '';
+    };
+
+    buildDoctorName = (dataTime) => {
+        let { language } = this.props;
+
+        if (dataTime && !_.isEmpty(dataTime)) {
+            let name =
+                language === LANGUAGES.VI
+                    ? `${dataTime.doctorData.lastName} ${dataTime.doctorData.firstName}  `
+                    : `${dataTime.doctorData.firstName} ${dataTime.doctorData.lastName}  `;
+            return name;
+        }
+        return '';
+    };
+
+    handleComfirmBooking = async () => {
+        let date = new Date(this.state.birthday).getTime();
+        let timeString = this.buildTimeBooking(this.props.dataTime);
+        let doctorName = this.buildDoctorName(this.props.dataTime);
+        let res = await postPatientBooking({
             fullName: this.state.fullName,
             phoneNumber: this.state.phoneNumber,
             email: this.state.email,
@@ -137,27 +167,24 @@ class BookingModal extends Component {
             selectedGender: this.state.selectedGender.value,
             doctorId: this.state.doctorId,
             timeType: this.state.timeType,
+            language: this.props.language,
+            timeString: timeString,
+            doctorName: doctorName,
         });
 
         const placement = 'bottomRight';
 
         if (res && res.errCode === 0) {
-            Modal.success({
-                title: 'Booking Success',
-                content: 'Your appointment has been successfully booked.',
-                closable: true,
-                placement: placement,
-                onOk: () => {
-                    this.props.closeBookingModal();
-                },
+            notification.success({
+                message: 'Booking Success',
+                description: 'Your appointment has been successfully booked.',
+                placement: placement, // Thêm placement vào đây
             });
+            this.props.closeBookingModal();
         } else {
-            Modal.error({
-                title: 'Booking Error',
-                content: 'There was an error booking your appointment. Please try again later.',
-                placement: placement,
-            });
+            message.error('Booking a new appointment error');
         }
+        // console.log('modal', this.state);
     };
 
     // Hàm để kiểm tra xem tất cả các ô input đã được điền đầy đủ và đúng định dạng hay không
