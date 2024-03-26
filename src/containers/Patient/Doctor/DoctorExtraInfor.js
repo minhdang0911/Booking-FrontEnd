@@ -65,24 +65,28 @@ class DoctorExtraInfor extends Component {
                     {isShowDetailInfor === false && (
                         <div className="short-infor">
                             <FormattedMessage id="patient.extra-infor-doctor.price" />
-                            {extraInfor && extraInfor.priceTypeData && language === LANGUAGES.VI && (
-                                <NumberFormat
-                                    value={extraInfor.priceTypeData.ValueVi}
-                                    displayType={'text'}
-                                    thousandSeparator={true}
-                                    suffix={'VND'}
-                                    className="currency"
-                                />
-                            )}
-                            {extraInfor && extraInfor.priceTypeData && language === LANGUAGES.EN && (
-                                <NumberFormat
-                                    value={extraInfor.priceTypeData.valueEn}
-                                    displayType={'text'}
-                                    thousandSeparator={true}
-                                    suffix={'$'}
-                                    className="currency"
-                                />
-                            )}
+                            {extraInfor.Doctor_infor &&
+                                extraInfor.Doctor_infor.priceTypeData &&
+                                language === LANGUAGES.VI && (
+                                    <NumberFormat
+                                        value={extraInfor.Doctor_infor.priceTypeData.ValueVi}
+                                        displayType={'text'}
+                                        thousandSeparator={true}
+                                        suffix={'VND'}
+                                        className="currency"
+                                    />
+                                )}
+                            {extraInfor.Doctor_infor &&
+                                extraInfor.Doctor_infor.priceTypeData &&
+                                language === LANGUAGES.EN && (
+                                    <NumberFormat
+                                        value={extraInfor.Doctor_infor.priceTypeData.valueEn}
+                                        displayType={'text'}
+                                        thousandSeparator={true}
+                                        suffix={'$'}
+                                        className="currency"
+                                    />
+                                )}
                             <span className="detail" onClick={() => this.showHideDetailInfor(true)}>
                                 {' '}
                                 <FormattedMessage id="patient.extra-infor-doctor.detail" />
@@ -104,15 +108,17 @@ class DoctorExtraInfor extends Component {
                                         <FormattedMessage id="patient.extra-infor-doctor.price" />
                                     </span>
                                     <span className="right">
-                                        {extraInfor && extraInfor.priceTypeData && language === LANGUAGES.VI && (
-                                            <NumberFormat
-                                                value={extraInfor.priceTypeData.ValueVi}
-                                                displayType={'text'}
-                                                thousandSeparator={true}
-                                                suffix={'VND'}
-                                                className="currency"
-                                            />
-                                        )}
+                                        {extraInfor &&
+                                            extraInfor.Doctor_infor.priceTypeData &&
+                                            language === LANGUAGES.VI && (
+                                                <NumberFormat
+                                                    value={extraInfor.Doctor_infor.priceTypeData.ValueVi}
+                                                    displayType={'text'}
+                                                    thousandSeparator={true}
+                                                    suffix={'VND'}
+                                                    className="currency"
+                                                />
+                                            )}
                                         {extraInfor &&
                                             extraInfor.Doctor_infor.priceTypeData &&
                                             language === LANGUAGES.EN && (

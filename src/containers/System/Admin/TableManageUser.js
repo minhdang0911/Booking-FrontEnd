@@ -110,11 +110,11 @@ class TableUserManage extends Component {
 
         return (
             <React.Fragment>
-                <MdEditor
+                {/* <MdEditor
                     style={{ height: '500px' }}
                     renderHTML={(text) => mdParser.render(text)}
                     onChange={handleEditorChange}
-                />
+                /> */}
 
                 <div className="table-container">
                     <Table columns={columns} dataSource={userRedux} rowKey={(record) => record.id} pagination={false} />
