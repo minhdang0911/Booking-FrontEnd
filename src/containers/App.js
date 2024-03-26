@@ -56,9 +56,9 @@ class App extends Component {
                                     <Route path={path.SYSTEM} component={userIsAuthenticated(System)} />
                                     <Route path={path.HOMEPAGE} component={HomePage} />
                                     <Route path={path.DETAIL_SPECIALTY} component={DetailSpecialty} />
-
-                                    <Route path={path.VERIFY_EMAIL_BOOKING} component={verifyEmail} />
+                                    <Route path={path.DETAIL_DOCTOR} component={DetailDoctor} />
                                     <Route path={'/doctor/'} component={userIsAuthenticated(Doctor)} />
+                                    <Route path={path.VERIFY_EMAIL_BOOKING} component={verifyEmail} />
                                 </Switch>
                             </CustomScrollbars>
                         </div>
