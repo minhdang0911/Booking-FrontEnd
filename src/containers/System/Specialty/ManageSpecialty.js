@@ -18,7 +18,7 @@ class ManageSpecialty extends Component {
             name: '',
             imageBase64: '',
             descriptionHTML: '',
-            descriptionMarkdowm: '',
+            descriptionMarkdown: '',
         };
     }
 
@@ -39,7 +39,7 @@ class ManageSpecialty extends Component {
 
     handleEditorChange = ({ html, text }) => {
         this.setState({
-            descriptionMarkdowm: text,
+            descriptionMarkdown: text,
             descriptionHTML: html,
         });
     };
@@ -64,7 +64,7 @@ class ManageSpecialty extends Component {
                 name: '',
                 imageBase64: '',
                 descriptionHTML: '',
-                descriptionMarkdowm: '',
+                descriptionMarkdown: '',
             });
         } else {
             message.error('Something wrong....');
@@ -101,7 +101,7 @@ class ManageSpecialty extends Component {
                             style={{ height: '300px' }}
                             renderHTML={(text) => mdParser.render(text)}
                             onChange={this.handleEditorChange}
-                            value={this.state.descriptionMarkdowm}
+                            value={this.state.descriptionMarkdown}
                         />
                     </div>
                     <div className="col-12">
