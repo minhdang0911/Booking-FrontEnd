@@ -5,11 +5,13 @@ import Slider from 'react-slick';
 import * as actions from '../../../store/actions';
 import { LANGUAGES } from '../../../utils';
 import { withRouter } from 'react-router';
+import { getAllSpecialty } from '../../../services/userService';
 class OutStandingDoctor extends Component {
     constructor(props) {
         super(props);
         this.state = {
             arrDoctors: [],
+            specialtyName: [],
         };
     }
 
@@ -20,8 +22,17 @@ class OutStandingDoctor extends Component {
             });
         }
     }
-    componentDidMount() {
+    async componentDidMount() {
         this.props.loadTopDoctor();
+        let res = await getAllSpecialty();
+        let data = res.data;
+        if (res) {
+            let specialtyNames = data.map((item) => item.name);
+
+            this.setState({
+                specialtyName: specialtyNames,
+            });
+        }
     }
 
     handleViewDetailDoctor = (doctor) => {
@@ -29,6 +40,8 @@ class OutStandingDoctor extends Component {
         this.props.history.push(`/detail-doctor/${doctor.id}`);
     };
     render() {
+        let { specialtyName } = this.state;
+        console.log('name state', this.state);
         console.log('check top doctors', this.props.topDoctorsRedux);
         let allDoctors = this.state.arrDoctors;
         let { language } = this.props;
